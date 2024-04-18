@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native'
+import { View, Image, Text, Pressable } from 'react-native'
 import React, { useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -24,7 +24,7 @@ export default function WelcomeScreen() {
   return (
     <View className="flex-1 justify-center items-center space-y-10 bg-sky-300">
       <StatusBar style="light" />
-
+      <Pressable onPress={() => navigation.navigate('Home')}>
       <Animated.View className="bg-white/20 rounded-full" style={{padding: ringTwoPadding}}>
         <Animated.View className="bg-white/20 rounded-full" style={{padding: ringOnePadding}}>
             <Image source={require('../assets/images/welcome.png')}
@@ -42,7 +42,7 @@ export default function WelcomeScreen() {
             Recipes made straight from your fridge.
         </Text>
       </View>
-
+      </Pressable>
     </View>
   )
 }
