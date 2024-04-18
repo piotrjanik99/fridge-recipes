@@ -4,7 +4,7 @@ import {categoryData} from '../constans'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-export default function Categories({categories, activeCategory, setActiveCategory}) {
+export default function Categories({categories, activeCategory, handleChangeCategory}) {
   return (
     <Animated.View entering={FadeInDown.duration(500).springify()}>
       <ScrollView
@@ -19,7 +19,7 @@ export default function Categories({categories, activeCategory, setActiveCategor
                 return (
                     <TouchableOpacity
                     key={index}
-                    onPress={() => setActiveCategory(cat.strCategory)}
+                    onPress={() => handleChangeCategory(cat.strCategory)}
                     className="flex items-center space-y-1">
                         <View className={"rounded-full p-[6px] "+activeButtonClass}>
                             <Image
