@@ -1,18 +1,19 @@
-import { View, ScrollView, Image, Text, TextInput } from 'react-native'
+import { View, ScrollView, Image, Text, TextInput, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {BellIcon, MagnifyingGlassIcon} from 'react-native-heroicons/outline'
 import Categories from '../components/categories';
 import Recipes from '../components/recipes';
 import axios from 'axios'
+import { useNavigation } from '@react-navigation/native';
 
 export default function HomeScreen() {
 
   const [activeCategory, setActiveCategory] = useState('Beef');
   const [categories, setCategories] = useState([]);
   const [meals, setMeals] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     getCategories();
@@ -46,6 +47,7 @@ export default function HomeScreen() {
       console.log('error: ', err.message)
     }
   }
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar style="dark" />
@@ -56,7 +58,9 @@ export default function HomeScreen() {
 
         <View className="mx-4 flex-row justify-between items-center mb-2">
           <Image source={require('../assets/images/avatar.png')} style={{height: hp(5), width: hp(5.5)}}></Image>
-          <BellIcon size={hp(4)} color="gray"></BellIcon>
+          <Pressable className="rounded-full bg-sky-300 p-1" onPress={() => navigation.navigate('Fridge')}>
+            <Image source={require('../assets/images/fridge-icon.png')} style={{height: hp(5), width: hp(5)}}></Image>
+          </Pressable>
         </View>
 
         <View className="mx-4 space-y-2 mb-2">
@@ -64,18 +68,7 @@ export default function HomeScreen() {
           <View>
             <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">Make your own food!</Text>
           </View>
-          <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">stay at <Text className="text-sky-300">home</Text></Text>
-        </View>
-
-        <View className="mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
-          <TextInput
-          placeholder='Search any recipe'
-          placeholderTextColor={'gray'}
-          style={{fontSize: hp(1.7)}}
-          className="flex-1 text-base mb-1 pl-3 tracking-wider"></TextInput>
-          <View className="bg-white rounded-full p-3">
-            <MagnifyingGlassIcon size={hp(2.5)} strokeWidth={3} color={'gray'}></MagnifyingGlassIcon>
-          </View>
+          <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">stay at <Text className="text-sky-300 font-bold">home</Text></Text>
         </View>
 
         <View>
