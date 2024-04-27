@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'
 import Loading from '../components/loading';
 import YoutubeIframe from 'react-native-youtube-iframe';
-
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 
 export default function RecipeDetailsScreen(props) {
   let item = props.route.params;
@@ -69,29 +69,29 @@ export default function RecipeDetailsScreen(props) {
         </Image>
       </View>
 
-      <View className="w-full absolute flex-row justify-between items-center pt-14">
+      <Animated.View entering={FadeIn.delay(200).duration(1000)} className="w-full absolute flex-row justify-between items-center pt-14">
         <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 rounded-full ml-5 bg-white">
           <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color="#7dd3fc"/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setIsFavourite(!isFavourite)} className="p-2 rounded-full mr-5 bg-white">
           <HeartIcon size={hp(3.5)} strokeWidth={4.5} color={isFavourite ? "red" : "gray"} />
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       { loading ? (
           <Loading size="large" className="mt-16" />
         ) : (
           <View className="px-4 flex justify-between space-y-4 pt-8">
-            <View className="space-y-2">
+            <Animated.View entering={FadeInDown.duration(700).springify().damping(12)} className="space-y-2">
               <Text style={{fontSize: hp(3)}} className="font-bold flex-1 text-neutral-700">
                 {meal?.strMeal}
               </Text>
               <Text style={{fontSize: hp(2)}} className="font-medium flex-1 text-neutral-500">
                 {meal?.strArea}
               </Text>
-            </View>
+            </Animated.View>
 
-            <View className="flex-row justify-around">
+            <Animated.View entering={FadeInDown.delay(100).duration(700).springify().damping(12)} className="flex-row justify-around">
               <View className="flex rounded-full bg-sky-300 p-2">
                 <View style={{height: hp(6.5), width: hp(6.5)}} className="bg-white rounded-full items-center justify-center">
                   <ClockIcon size={hp(4)} strokeWidth={2.5} color="#525252"></ClockIcon>
@@ -145,9 +145,9 @@ export default function RecipeDetailsScreen(props) {
                   </Text>
                 </View>
               </View>
-            </View>
+            </Animated.View>
 
-            <View className="space-y-4">
+            <Animated.View entering={FadeInDown.delay(200).duration(700).springify().damping(12)} className="space-y-4">
               <Text style={{fontSize: hp(2.5)}} className="font-bold flex-1 text-neutral-700">Ingredients</Text>
               <View className="space-y-2 ml-3">
                 {
@@ -164,19 +164,19 @@ export default function RecipeDetailsScreen(props) {
                   })
                 }
               </View>
-            </View>
+            </Animated.View>
 
-            <View className="space-y-4">
+            <Animated.View entering={FadeInDown.delay(300).duration(700).springify().damping(12)} className="space-y-4">
               <Text style={{fontSize: hp(2.5)}} className="font-bold flex-1 text-neutral-700">Instructions</Text>
               <Text style={{fontSize: hp(1.6)}} className="text-neutral-700">
                 {
                   meal?.strInstructions
                 }
               </Text>
-            </View>
+            </Animated.View>
 
             {meal.strYoutube && (
-              <View className="space-y-4">
+              <Animated.View entering={FadeInDown.delay(400).duration(700).springify().damping(12)} className="space-y-4">
                 <Text style={{fontSize: hp(2.5)}} className="font-bold flex-1 text-neutral-700">Recipe Video</Text>
                 <View>
                   <YoutubeIframe 
@@ -184,7 +184,7 @@ export default function RecipeDetailsScreen(props) {
                   height={hp(30)}>
                   </YoutubeIframe>
                 </View>
-              </View>
+              </Animated.View>
             )}
           </View>
         )
