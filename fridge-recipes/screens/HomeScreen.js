@@ -1,4 +1,4 @@
-import { View, ScrollView, Image, Text, TextInput, Pressable } from 'react-native'
+import { View, ScrollView, Image, Text, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
@@ -28,7 +28,7 @@ export default function HomeScreen() {
 
   const getCategories = async ()=> {
     try {
-      const response = await axios.get('https://www.themealdb.com/api/json/v1/1/categories.php')
+      const response = await axios.get('https://www.themealdb.com/api/json/v2/9973533/categories.php')
       if(response && response.data) {
         setCategories(response.data.categories);
       }
@@ -39,7 +39,7 @@ export default function HomeScreen() {
 
   const getRecepies = async (category="Beef")=> {
     try {
-      const response = await axios.get(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
+      const response = await axios.get(`https://www.themealdb.com/api/json/v2/9973533/filter.php?c=${category}`)
       if(response && response.data) {
         setMeals(response.data.meals);
       }
