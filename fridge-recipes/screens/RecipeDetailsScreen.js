@@ -16,6 +16,7 @@ export default function RecipeDetailsScreen(props) {
   const navigation = useNavigation();
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
+  let levels = ['Easy', 'Medium', 'Hard'];
 
   useEffect(() => {
     getMealData(item.idMeal)
@@ -52,7 +53,13 @@ export default function RecipeDetailsScreen(props) {
       return match[1];
     }
     return null;
-}
+  }
+
+  function getRandomInt(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+  }
   
   return (
     <ScrollView 
@@ -74,7 +81,7 @@ export default function RecipeDetailsScreen(props) {
           <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color="#7dd3fc"/>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setIsFavourite(!isFavourite)} className="p-2 rounded-full mr-5 bg-white">
-          <HeartIcon size={hp(3.5)} strokeWidth={4.5} color={isFavourite ? "red" : "gray"} />
+          <HeartIcon size={hp(3.5)} strokeWidth={4.5} color={isFavourite ? "#7dd3fc" : "gray"} />
         </TouchableOpacity>
       </Animated.View>
 
@@ -98,7 +105,7 @@ export default function RecipeDetailsScreen(props) {
                 </View>
                 <View className="flex items-center py-2 space-y-1">
                   <Text style={{fontSize: hp(2)}} className="font-bold text-neutral-700">
-                    35
+                    {getRandomInt(10, 90)}
                   </Text>
                   <Text style={{fontSize: hp(1.3)}} className="font-bold text-neutral-700">
                     Mins
@@ -112,7 +119,7 @@ export default function RecipeDetailsScreen(props) {
                 </View>
                 <View className="flex items-center py-2 space-y-1">
                   <Text style={{fontSize: hp(2)}} className="font-bold text-neutral-700">
-                    3
+                    {getRandomInt(1, 8)}
                   </Text>
                   <Text style={{fontSize: hp(1.3)}} className="font-bold text-neutral-700">
                     Servings
@@ -126,7 +133,7 @@ export default function RecipeDetailsScreen(props) {
                 </View>
                 <View className="flex items-center py-2 space-y-1">
                   <Text style={{fontSize: hp(2)}} className="font-bold text-neutral-700">
-                    768
+                    {getRandomInt(300, 900)}
                   </Text>
                   <Text style={{fontSize: hp(1.3)}} className="font-bold text-neutral-700">
                     Cal
@@ -141,7 +148,7 @@ export default function RecipeDetailsScreen(props) {
                 <View className="flex items-center py-2 space-y-1">
                   <Text style={{fontSize: hp(2)}} className="font-bold text-neutral-700"></Text>
                   <Text style={{fontSize: hp(1.3)}} className="font-bold text-neutral-700">
-                    Easy
+                    {levels[getRandomInt(0, 3)]}
                   </Text>
                 </View>
               </View>

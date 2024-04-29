@@ -56,19 +56,10 @@ export default function HomeScreen() {
       contentContainerStyle={{paddingBottom: 50}}
       className="space-y-6 pt-14">
 
-        <View className="mx-4 flex-row justify-between items-center mb-2">
-          <Image source={require('../assets/images/avatar.png')} style={{height: hp(5), width: hp(5.5)}}></Image>
-          <Pressable className="rounded-full bg-sky-300 p-1" onPress={() => navigation.navigate('Fridge')}>
+        <View className="mx-4 flex-row items-center mb-2  shadow-md">
+          <Pressable className="rounded-full bg-sky-300 p-1 items-center" style={{width: '100%'}} onPress={() => navigation.navigate('Fridge')}>
             <Image source={require('../assets/images/fridge-icon.png')} style={{height: hp(5), width: hp(5)}}></Image>
           </Pressable>
-        </View>
-
-        <View className="mx-4 space-y-2 mb-2">
-          <Text style={{fontSize: hp(1.7)}} className="text-neutral-600">Hello, Piotr!</Text>
-          <View>
-            <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">Make your own food!</Text>
-          </View>
-          <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">stay at <Text className="text-sky-300 font-bold">home</Text></Text>
         </View>
 
         <View>
