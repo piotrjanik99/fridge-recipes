@@ -1,12 +1,13 @@
-import { View, TextInput, Text, TouchableOpacity, Image } from 'react-native'
+import { View, TextInput, Text, TouchableOpacity, Image, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import {MagnifyingGlassIcon} from 'react-native-heroicons/outline'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Animated, { FadeIn } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeInDown } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import axios from 'axios'
+import MasonryList from '@react-native-seoul/masonry-list'
 
 export default function FridgeScreen() {
   const navigation = useNavigation();
@@ -15,13 +16,12 @@ export default function FridgeScreen() {
   const [meals, setMeals] = useState([]);
 
   const handleSearch = async () => {
-    const transformedText = inputValue.trim().toLowerCase().split(',').map(item => item.trim().replace(/\s+/g, '_')).join(',');
+    const ingredients = inputValue.trim().toLowerCase().split(',').map(item => item.trim().replace(/\s+/g, '_')).join(',');
 
     try {
-      const response = await axios.get(`https://www.themealdb.com/api/json/v2/9973533/filter.php?i=${transformedText}`)
+      const response = await axios.get(`https://www.themealdb.com/api/json/v2/9973533/filter.php?i=${ingredients}`)
       if(response && response.data) {
-        setMeals(response.data)
-        console.log(meals)
+        setMeals(response.data.meals)
       }
     } catch(err) {
       console.log('error: ', err.message)
@@ -29,10 +29,32 @@ export default function FridgeScreen() {
     setInputValue('');
   };
 
+  const RecipeCard = ({item, index, navigation}) => {
+    let isEven = index%2 == 0;
+    return (
+        <Animated.View entering={FadeInDown.delay(index*100).duration(600).springify().damping(12)}>
+            <Pressable 
+            style={{width: '100%', paddingLeft: isEven ? 0 : 8, paddingRight: isEven ? 8 : 0}}
+            className="flex justify-center mb-4 space-y-1"
+            onPress={() => navigation.navigate('RecipeDetails', {...item})}>
+                <Image 
+                source={{uri: item.strMealThumb}}
+                style={{width: '100%', height: index%3==0 ? hp(25) : hp(35), borderRadius: 35}}
+                className="bg-black/5" />
+                <Text style={{fontSize: hp(1.5)}} className="font-semibold ml-2 text-neutral-600">
+                {
+                item.strMeal.length > 20 ? item.strMeal.slice(0, 20) + '...' : item.strMeal
+                }
+                </Text>
+            </Pressable>
+        </Animated.View>
+    )
+}
+
   return (
     <SafeAreaView className="flex-1 bg-white">
 
-        <Animated.View entering={FadeIn.delay(200).duration(1000)} className="w-full absolute flex-row justify-between items-center pt-14">
+        <Animated.View entering={FadeIn.delay(200).duration(1000)} className="w-full absolute flex-row justify-between items-center pt-14 ">
         <TouchableOpacity onPress={() => navigation.goBack()} className="p-2 rounded-full ml-5 bg-white">
           <ChevronLeftIcon size={hp(3.5)} strokeWidth={4.5} color="#7dd3fc"/>
         </TouchableOpacity>
@@ -59,6 +81,20 @@ export default function FridgeScreen() {
             </TouchableOpacity>
             </View>
         </View>
+
+
+          {meals.length > 0 ? (
+            <MasonryList
+            data={meals}
+            keyExtractor={(item) => item.idMeal}
+            numColumns={2}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item, i}) => <RecipeCard item={item} index={i} navigation={navigation} />}
+            onEndReachedThreshold={0.1}/>
+          ) : (
+            <Text style={{ textAlign: 'center', marginTop: 20 }}>No meals found</Text>
+          )}
+
 
   </SafeAreaView>
   )

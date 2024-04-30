@@ -56,7 +56,7 @@ export default function HomeScreen() {
       contentContainerStyle={{paddingBottom: 50}}
       className="space-y-6 pt-14">
 
-        <View className="mx-4 flex-row items-center mb-2  shadow-md">
+        <View className="mx-4 flex-row items-center mb-2 shadow-md">
           <Pressable className="rounded-full bg-sky-300 p-1 items-center" style={{width: '100%'}} onPress={() => navigation.navigate('Fridge')}>
             <Image source={require('../assets/images/fridge-icon.png')} style={{height: hp(5), width: hp(5)}}></Image>
           </Pressable>
