@@ -17,6 +17,7 @@ export default function RecipeDetailsScreen(props) {
   const [meal, setMeal] = useState(null);
   const [loading, setLoading] = useState(true);
   let levels = ['Easy', 'Medium', 'Hard'];
+  let time = [15, 20, 25, 30, 35, 40, 45, 50, 55, 65, 70, 75, 80, 85, 90]
 
   useEffect(() => {
     getMealData(item.idMeal)
@@ -105,7 +106,7 @@ export default function RecipeDetailsScreen(props) {
                 </View>
                 <View className="flex items-center py-2 space-y-1">
                   <Text style={{fontSize: hp(2)}} className="font-bold text-neutral-700">
-                    {getRandomInt(10, 90)}
+                    {time[getRandomInt(0, 15)]}
                   </Text>
                   <Text style={{fontSize: hp(1.3)}} className="font-bold text-neutral-700">
                     Mins

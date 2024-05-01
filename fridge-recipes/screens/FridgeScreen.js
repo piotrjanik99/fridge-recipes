@@ -34,7 +34,7 @@ export default function FridgeScreen() {
     return (
         <Animated.View entering={FadeInDown.delay(index*100).duration(600).springify().damping(12)}>
             <Pressable 
-            style={{width: '100%', paddingLeft: isEven ? 0 : 8, paddingRight: isEven ? 8 : 0}}
+            style={{width: '100%', paddingLeft: isEven ? 16 : 8, paddingRight: isEven ? 8 : 16}}
             className="flex justify-center mb-4 space-y-1"
             onPress={() => navigation.navigate('RecipeDetails', {...item})}>
                 <Image 
@@ -67,7 +67,7 @@ export default function FridgeScreen() {
           <Text style={{fontSize: hp(3.8)}} className="font-semibold text-neutral-600">your <Text className="text-sky-300 font-bold">fridge</Text>?</Text>
         </View>
 
-        <View className="mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
+        <View className="mb-5 mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
             <TextInput
             placeholder='put ingredients here!'
             placeholderTextColor={'gray'}
@@ -76,25 +76,25 @@ export default function FridgeScreen() {
             value={inputValue}
             className="flex-1 text-base mb-1 pl-3 tracking-wider"></TextInput>
             <View className="bg-white rounded-full p-3">
-            <TouchableOpacity onPress={handleSearch}>
+            <TouchableOpacity onPress={inputValue.length > 0 ? handleSearch : null}>
               <MagnifyingGlassIcon size={20} strokeWidth={3} color={'gray'} />
             </TouchableOpacity>
             </View>
         </View>
-
-
-          {meals.length > 0 ? (
-            <MasonryList
-            data={meals}
-            keyExtractor={(item) => item.idMeal}
-            numColumns={2}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item, i}) => <RecipeCard item={item} index={i} navigation={navigation} />}
-            onEndReachedThreshold={0.1}/>
-          ) : (
-            <Text style={{ textAlign: 'center', marginTop: 20 }}>No meals found</Text>
-          )}
-
+        
+          {
+            meals?.length == 0 ? (
+              <Text className="font-bold text-neutral-600 mx-4" style={{ marginTop: -8 }}>please separate the ingredients by commas</Text>
+            ) : (
+                <MasonryList
+                data={meals}
+                keyExtractor={(item) => item.idMeal}
+                numColumns={2}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item, i}) => <RecipeCard item={item} index={i} navigation={navigation} />}
+                onEndReachedThreshold={0.1}/>
+            )
+          }
 
   </SafeAreaView>
   )
